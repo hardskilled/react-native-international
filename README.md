@@ -96,7 +96,7 @@ Use a webhook `useIntl` in a component that uses strings.
 ```jsx
 import React from 'react'
 import {View, Text} from 'react-native'
-import {useIntl} from 'hooks/useIntl'
+import {useIntl} from 'react-native-international'
 
 export default ({navigation}) => {
     const {

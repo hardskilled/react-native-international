@@ -2,7 +2,7 @@ import { Platform, NativeModules } from 'react-native'
 import formatMessage from 'format-message'
 import { UIStore } from './store'
 
-const getLocate = () => {
+const getLocateFromPhone = () => {
     if (Platform.OS === 'ios') {
         return (
             NativeModules.SettingsManager.settings.AppleLocale ||
@@ -13,9 +13,15 @@ const getLocate = () => {
     return NativeModules.I18nManager.localeIdentifier
 }
 
+const getLocale = () => {
+    const locale = getLocateFromPhone()
+
+    return locale.split('_').shift()
+}
+
 const options = {
     languages: [],
-    localeFromPhone: getLocate(),
+    localeFromPhone: getLocale(),
     defaultFallback: null,
     locale: null,
     translations: {},

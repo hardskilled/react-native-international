@@ -1,4 +1,4 @@
-import formatMessage, { setup } from 'format-message'
+import formatMessage from 'format-message'
 import { UIStore } from './store'
 import {
     ChangeLocaleFunction,
@@ -29,7 +29,7 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
 
     console.warn('dbg:000', [options.locale, buffer.translations[options.locale]])
 
-    setup({
+    formatMessage.setup({
         locale: options.locale,
         translations: buffer.translations[options.locale],
     })

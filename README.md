@@ -1,8 +1,8 @@
 # React Native International
 
-Flexible internalization of your React Native project with "format-message" library. By default, it uses the locale of
+Flexible internalization of your React Native project with "i18next" library. By default, it uses the locale of
 the phone, but it is possible to change the language via the changeLocale method.
-The [format-message](https://www.npmjs.com/package/format-message) library is used for the message format.
+The [i18next](https://www.i18next.com/) library is used for the message format.
 
 ## Demo
 
@@ -106,7 +106,7 @@ import {useIntl} from 'react-native-international'
 
 export default ({navigation}) => {
     const {
-        t, // Instance format-message 
+        t, // Instance i18next 
     } = useIntl()
 
     return (

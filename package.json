@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/hardskilled/react-native-international#readme",
   "dependencies": {
-    "format-message": "^6.2.3",
+    "i18next": "^23.15.1",
     "pullstate": "^1.25.0"
   },
   "devDependencies": {

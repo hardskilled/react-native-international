@@ -1,5 +1,7 @@
-import formatMessage from 'format-message';
-import type {Locale, Translations} from 'format-message';
+import { ResourceLanguage } from "i18next/typescript/options";
+import { TFunction } from "i18next/typescript/t";
+
+type Locale = string
 
 export type LanguageMeta = {
     label: Locale;
@@ -9,7 +11,7 @@ export type LanguageMeta = {
 export type LanguagePack = {
     locale: Locale;
     meta: LanguageMeta;
-    translations?: Translations;
+    translations?: ResourceLanguage;
 };
 
 export type LocaleOptions = {
@@ -20,13 +22,7 @@ export type LocaleOptions = {
 };
 
 export type LocaleBuffer = {
-    current: typeof formatMessage | null
-    namespaces: {
-        [key: string]: typeof formatMessage
-    },
-    translations: {
-        [key: Locale]: Translations
-    }
+    translations: Locale[]
 }
 
 export type InitializationParams = {
@@ -37,11 +33,11 @@ export type InitializationParams = {
 
 export type ChangeLocaleFunction = (locale: Locale) => Locale | null;
 
-export type InitializationFunction = (params: InitializationParams) => Locale | null;
+export type InitializationFunction = (params: InitializationParams) => Promise<Locale | null>;
 
 export interface UseIntlReturn {
     getLanguages: () => (LanguagePack & { selected: boolean })[];
     locale: string;
-    t: typeof formatMessage;
+    t: TFunction;
     changeLocale: (locale: Locale) => Locale | null;
 }

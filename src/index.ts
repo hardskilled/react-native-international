@@ -1,4 +1,4 @@
-import formatMessage from 'format-message'
+import formatMessageInstance from 'format-message'
 import { UIStore } from './store'
 
 import {
@@ -8,6 +8,8 @@ import {
     LocaleOptions,
     UseIntlReturn
 } from "./types/index.type";
+
+const formatMessage = formatMessageInstance.namespace()
 
 const options: LocaleOptions = {
     languages: [],

@@ -46,6 +46,7 @@
     "esbuild-plugin-d.ts": "^1.3.0",
     "esbuild-plugin-tsc": "^0.4.0",
     "eslint": "^9.11.0",
+    "react": "*",
     "react-native": "*",
     "tsc": "^2.0.4",
     "tslib": "^2.7.0",

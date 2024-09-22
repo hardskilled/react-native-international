@@ -10,7 +10,7 @@ const sharedConfig = {
 
 build({
     ...sharedConfig,
-    platform: 'browser', // for CJS
+    platform: 'node', // for CJS
     outfile: "dist/index.js",
 });
 

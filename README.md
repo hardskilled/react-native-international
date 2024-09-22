@@ -46,7 +46,7 @@ export default <LanguagePack>{
     },
     translations: {
         hello: 'Hello!',
-        hello_with_name: 'Hello {name}!',
+        hello_with_name: 'Hello {{name}}!',
     },
 }
 ```
@@ -61,7 +61,7 @@ export default <LanguagePack>{
     },
     translations: {
         hello: 'Салам!',
-        hello_with_name: 'Салам {name}!',
+        hello_with_name: 'Салам {{name}}!',
     }
 }
 ```

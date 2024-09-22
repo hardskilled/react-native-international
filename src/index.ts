@@ -34,6 +34,8 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
         translations: buffer.translations[options.locale],
     })
 
+    console.warn('dbg:vvv', formatMessage('dailer'))
+
     UIStore.update((s) => {
         s.locale = locale
     })
@@ -93,17 +95,17 @@ export const initialization: InitializationFunction = ({
     return changeLocale(options.localeFromPhone)
 }
 
+const getLanguages = (locale) =>
+    options.languages.map((language) => ({
+        selected: locale === language.locale,
+        ...language,
+    }))
+
 export const useIntl = (): UseIntlReturn => {
     const locale = UIStore.useState((g) => g.locale || options.defaultFallback)
 
-    const getLanguages = () =>
-        options.languages.map((language) => ({
-            selected: locale === language.locale,
-            ...language,
-        }))
-
     return {
-        getLanguages,
+        getLanguages: () => getLanguages(locale),
         locale,
         t: formatMessage,
         changeLocale,

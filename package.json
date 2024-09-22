@@ -6,7 +6,6 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "preinstall": "git config core.hooksPath .githooks",
     "build:bundle": "node bin/build.js",
     "build:types": "tsc",
     "build": "npm run build:bundle && npm run build:types",

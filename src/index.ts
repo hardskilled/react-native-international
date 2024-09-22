@@ -27,6 +27,8 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
 
     options.locale = locale
 
+    console.warn('dbg:000', [options.locale, buffer.translations[options.locale]])
+
     setup({
         locale: options.locale,
         translations: buffer.translations[options.locale],
@@ -47,7 +49,6 @@ export const initialization: InitializationFunction = ({
     options.localeFromPhone = localeFromPhone()
 
     if (!languages || !Array.isArray(languages) || languages.length === 0) {
-        console.warn('No language packs found')
         return
     }
 

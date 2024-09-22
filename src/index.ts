@@ -81,6 +81,8 @@ export const initialization: InitializationFunction = ({
         options.defaultFallback = defaultFallback
     }
 
+    console.warn('dbg:buffer.translations', buffer.translations)
+
     formatMessage.setup({
         locale: options.defaultFallback,
         translations: buffer.translations[options.defaultFallback],

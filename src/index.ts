@@ -21,6 +21,7 @@ const buffer: LocaleBuffer = {
 
 export const changeLocale: ChangeLocaleFunction = (locale) => {
     if (locale && !buffer.translations[locale]) {
+        console.warn(`Locale "${locale}" not found`)
         return null
     }
 

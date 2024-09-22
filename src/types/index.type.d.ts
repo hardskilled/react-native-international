@@ -18,13 +18,16 @@ export type LocaleOptions = {
         [key: Locale]: Translations;
     };
 };
+export type ChangeLocaleFunction = (locale: Locale) => Locale | null;
+
+export type InitializationFunction = (params: InitializationParams) => Locale | null;
+
 export type InitializationParams = {
-    localeFromPhone: () => Locale;
+    localeFromPhone: () => Locale | string;
     languages: LanguagePack[];
     defaultFallback?: Locale | null;
 };
-export type ChangeLocaleFunction = (locale: Locale) => Locale | null;
-export type InitializationFunction = (params: InitializationParams) => Locale | null;
+
 export interface UseIntlReturn {
     getLanguages: () => (LanguagePack & {
         selected: boolean;

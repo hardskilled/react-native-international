@@ -10,6 +10,12 @@ The [format-message](https://www.npmjs.com/package/format-message) library is us
 
 ## Install
 
+If your application on Expo:
+
+```bash
+npx expo install expo-localization
+```
+
 Use npm:
 
 ```bash

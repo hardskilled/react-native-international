@@ -44,6 +44,11 @@ export const initialization: InitializationFunction = async ({
    defaultFallback = null,
    debug = false
 }) => {
+    options.languages = languages.map(i => ({
+        locale: i.locale,
+        meta: i.meta
+    }))
+
     options.localeFromPhone = localeFromPhone()
 
     const i18nextParams: InitOptions = {
@@ -67,9 +72,6 @@ export const initialization: InitializationFunction = async ({
 }
 
 const getLanguages = (locale) => {
-
-    console.warn('dbg:options.languages', options.languages)
-
     return options.languages.map((language) => ({
         selected: locale === language.locale,
         ...language,

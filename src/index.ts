@@ -1,5 +1,4 @@
 import formatMessage, {SetupOptions} from 'format-message'
-import { UIStore } from './store'
 import {
     ChangeLocaleFunction,
     InitializationFunction,
@@ -7,6 +6,8 @@ import {
     LocaleOptions,
     UseIntlReturn
 } from "./types/index.type";
+import { useMemo } from "react";
+import { UIStoreState } from "./types/store.type";
 
 const options: LocaleOptions = {
     languages: [],
@@ -27,23 +28,17 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
         return null
     }
 
-    options.locale = locale
-
     formatMessage.setup({
-        locale: options.locale,
-        translations: {
-            ...buffer.translations[options.locale]
-        },
+        locale: locale,
+        translations: buffer.translations[options.locale],
     })
+
+    options.locale = locale
 
     console.warn('dbg:vvv', formatMessage.setup({
         locale: options.locale,
         translations: buffer.translations[options.locale],
     }))
-
-    UIStore.update((s) => {
-        s.locale = locale
-    })
 
     return locale
 }
@@ -81,9 +76,7 @@ export const initialization: InitializationFunction = ({
             options.defaultFallback = lang.locale
         }
 
-        buffer.translations[lang.locale] = {
-            ...lang.translations
-        }
+        buffer.translations[lang.locale] = lang.translations
     }
 
     if (defaultFallback && !buffer.translations[defaultFallback]) {
@@ -99,9 +92,7 @@ export const initialization: InitializationFunction = ({
 
     formatMessage.setup({
         locale: options.defaultFallback,
-        translations: {
-            ...buffer.translations[options.defaultFallback]
-        },
+        translations: buffer.translations[options.defaultFallback],
     })
 
     return changeLocale(options.localeFromPhone)
@@ -114,11 +105,16 @@ const getLanguages = (locale) =>
     }))
 
 export const useIntl = (): UseIntlReturn => {
-    const locale = UIStore.useState((g) => g.locale || options.defaultFallback)
+    const UIStore = useMemo<UIStoreState>(
+        () => ({
+            locale: options.locale || options.defaultFallback
+        }),
+        [options.locale]
+    )
 
     return {
-        getLanguages: () => getLanguages(locale),
-        locale,
+        getLanguages: () => getLanguages(UIStore.locale),
+        locale: UIStore.locale,
         t: formatMessage,
         changeLocale,
     }

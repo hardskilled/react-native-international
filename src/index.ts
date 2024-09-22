@@ -1,4 +1,4 @@
-import * as formatMessage from 'format-message'
+import formatMessage, { setup } from 'format-message'
 import { UIStore } from './store'
 import { ChangeLocaleFunction, InitializationFunction, LocaleOptions, UseIntlReturn } from "./types/index.type";
 
@@ -17,7 +17,7 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
 
     options.locale = locale
 
-    formatMessage.setup({
+    setup({
         locale: options.locale,
         translations: options.translations[options.locale],
     })

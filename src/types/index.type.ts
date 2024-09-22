@@ -1,4 +1,4 @@
-import * as formatMessage from 'format-message';
+import formatMessage from 'format-message';
 import type {Locale, Translations} from 'format-message';
 
 export type LanguageMeta = {

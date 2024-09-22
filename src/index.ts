@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { UIStore } from './store'
+import { InitOptions } from "i18next/typescript/options";
 
 import {
     ChangeLocaleFunction,
@@ -8,7 +9,6 @@ import {
     LocaleOptions,
     UseIntlReturn
 } from "./types/index.type";
-import {InitOptions} from "i18next/typescript/options";
 
 const options: LocaleOptions = {
     languages: [],
@@ -43,7 +43,7 @@ export const initialization: InitializationFunction = async ({
    languages,
    defaultFallback = null,
    debug = false
-}, lang = null) => {
+}) => {
     options.localeFromPhone = localeFromPhone()
 
     const i18nextParams: InitOptions = {

@@ -87,7 +87,8 @@ void initialization({
         enLang,
         kyLang
     ],
-    localeFromPhone
+    localeFromPhone,
+    debug: true // i18next debug (optional)
 })
 ```
 

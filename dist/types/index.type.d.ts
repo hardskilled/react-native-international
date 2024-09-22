@@ -1,6 +1,6 @@
 import { ResourceLanguage } from "i18next/typescript/options";
 import { TFunction } from "i18next/typescript/t";
-type Locale = string;
+export type Locale = string;
 export type LanguageMeta = {
     label: Locale;
     [key: string]: string | number;
@@ -33,6 +33,6 @@ export interface UseIntlReturn {
     locale: Locale | null;
     t: TFunction;
     changeLocale: (locale: Locale) => Locale | null;
+    debug?: boolean;
 }
-export {};
 //# sourceMappingURL=index.type.d.ts.map

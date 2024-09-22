@@ -1,7 +1,7 @@
 {
   "name": "react-native-international",
   "version": "2.0.0-rc2",
-  "description": "Flexible internalization of your React Native project with \"format-message\" library",
+  "description": "Flexible i18n package for React Native or Expo based on \"i18next\"",
   "module": "dist/index.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

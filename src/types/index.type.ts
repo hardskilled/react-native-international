@@ -17,10 +17,13 @@ export type LocaleOptions = {
     localeFromPhone: Locale | null;
     defaultFallback: Locale | null;
     locale: Locale | null;
+};
+
+export type LocaleBuffer = {
     translations: {
         [key: Locale]: Translations
     }
-};
+}
 
 export type InitializationParams = {
     localeFromPhone: () => Locale;

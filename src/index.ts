@@ -1,17 +1,26 @@
 import formatMessage, { setup } from 'format-message'
 import { UIStore } from './store'
-import { ChangeLocaleFunction, InitializationFunction, LocaleOptions, UseIntlReturn } from "./types/index.type";
+import {
+    ChangeLocaleFunction,
+    InitializationFunction,
+    LocaleBuffer,
+    LocaleOptions,
+    UseIntlReturn
+} from "./types/index.type";
 
 const options: LocaleOptions = {
     languages: [],
     localeFromPhone: null,
     defaultFallback: null,
     locale: null,
+}
+
+const buffer: LocaleBuffer = {
     translations: {},
 }
 
 export const changeLocale: ChangeLocaleFunction = (locale) => {
-    if (locale && !options.translations[locale]) {
+    if (locale && !buffer.translations[locale]) {
         return null
     }
 
@@ -19,7 +28,7 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
 
     setup({
         locale: options.locale,
-        translations: options.translations[options.locale],
+        translations: buffer.translations[options.locale],
     })
 
     UIStore.update((s) => {
@@ -63,10 +72,10 @@ export const initialization: InitializationFunction = ({
             options.defaultFallback = lang.locale
         }
 
-        options.translations[lang.locale] = lang.translations
+        buffer.translations[lang.locale] = lang.translations
     }
 
-    if (defaultFallback && !options.translations[defaultFallback]) {
+    if (defaultFallback && !buffer.translations[defaultFallback]) {
         console.warn('Fallback language not found in language packs')
     } else if (defaultFallback) {
         options.defaultFallback = defaultFallback
@@ -74,7 +83,7 @@ export const initialization: InitializationFunction = ({
 
     formatMessage.setup({
         locale: options.defaultFallback,
-        translations: options.translations[options.defaultFallback],
+        translations: buffer.translations[options.defaultFallback],
     })
 
     return changeLocale(options.localeFromPhone)

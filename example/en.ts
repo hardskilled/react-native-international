@@ -1,4 +1,6 @@
-export default {
+import { LanguagePack } from '../src/types/index.type'
+
+export default <LanguagePack>{
     locale: 'en',
     meta: { // Shown in method getLanguages
         label: 'English',

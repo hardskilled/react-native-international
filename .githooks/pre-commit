@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "[*] Remove dist"
+
+rm -rf ./dist
+
+echo "[*] Check eslint"
+
+npm run test
+
+echo "[*] Build dist"
+
+npm run build
+
+git add ./dist

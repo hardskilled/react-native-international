@@ -1,14 +1,20 @@
 # React Native International
 
-Flexible internalization of your React Native project with "format-message" library. By default, it uses the locale of
+Flexible internalization of your React Native project with "i18next" library. By default, it uses the locale of
 the phone, but it is possible to change the language via the changeLocale method.
-The [format-message](https://www.npmjs.com/package/format-message) library is used for the message format.
+The [i18next](https://www.i18next.com/) library is used for the message format.
 
 ## Demo
 
 * [App to send WhatsApp messages without adding to contacts.](https://play.google.com/store/apps/details?id=com.wdirect)
 
 ## Install
+
+If your application on Expo:
+
+```bash
+npx expo install expo-localization
+```
 
 Use npm:
 
@@ -24,83 +30,88 @@ yarn add react-native-international
 
 ## Usage
 
-The first step is to add language packs
+The first step is to add language packs.
 
 ### Step 1. Create language packs
 
-Make separate files for each language.
+For first make directory `translations` and separate files for each language. 
 
-##### en.js
+##### translations/en.ts
 
-```js
-export default {
+```ts
+export default <LanguagePack>{
     locale: 'en',
     meta: { // Shown in method getLanguages
         label: 'English',
     },
     translations: {
         hello: 'Hello!',
-        hello_with_name: 'Hello {name}!',
+        hello_with_name: 'Hello {{name}}!',
     },
 }
 ```
 
-##### ru.js
+##### translations/ky.ts
 
-```js
-export default {
-    locale: 'ru',
+```ts
+export default <LanguagePack>{
+    locale: 'ky',
     meta: { // Shown in method getLanguages
-        label: 'Русский язык',
+        label: 'Кыргызча',
     },
     translations: {
-        hello: 'Привет!',
-        hello_with_name: 'Привет {name}!',
-    },
+        hello: 'Салам!',
+        hello_with_name: 'Салам {{name}}!',
+    }
 }
 ```
 
 ### Step 2. Initialize languages
 
-Open `index.js` and add languages initialization before app render.
+Make initiator, for example, `translations/_i18t.ts`.
 
-```js
-import {AppRegistry} from 'react-native'
-import {name as appName} from './app.json'
+```ts
+import { initialization } from 'react-native-international'
+import { getLocales } from "expo-localization";
 
-// Import initialization
-import {initialization} from 'react-native-international'
+import enLang from './en'
+import kyLang from './ky'
 
-// Add locales
-initialization([
-    require('./en'),
-    require('./ru')
-])
+const localeFromPhone = () => {
+    return getLocales()?.[0]?.languageCode ?? "en";
+}
 
-AppRegistry.registerComponent(appName, () => App)
+void initialization({
+    defaultFallback: 'en',
+    languages: [
+        enLang,
+        kyLang
+    ],
+    localeFromPhone,
+    debug: true // i18next debug (optional)
+})
 ```
 
-If you want to set default fallback language, you can use second argument
+Open `index.js`, `App.tsx`, or `app/_layout.tsx` and add languages initialization import.
 
-```js
-initialization([
-    require('./en'),
-    require('./ru')
-], 'ru')
+```ts
+import "./localization/_i18n"
 ```
+
+If you want to set language immediately, you can use `localeFromPhone` handler
 
 ### Step 3. Use a hook
 
 Use a webhook `useIntl` in a component that uses strings.
 
-```jsx
+```tsx
 import React from 'react'
-import {View, Text} from 'react-native'
-import {useIntl} from 'react-native-international'
+import { View, Text } from 'react-native'
+import { useIntl } from 'react-native-international'
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
     const {
-        t, // Instance format-message 
+        t, // Instance i18next 
     } = useIntl()
 
     return (
@@ -114,12 +125,12 @@ export default ({navigation}) => {
 
 ## Change language
 
-There are several helper methods for comfortable working with languages.
+There are several helper methods for working with languages.
 
-```js
+```ts
 const {
     t, // Instance format-message 
-    locale, // Current locale
+    locale, // Current locale string
     getLanguages, // Method to get locales with "meta" property from language pack and "selected" flag.
     changeLocale, // Method to change locale
 } = useIntl()
@@ -129,7 +140,7 @@ const {
 
 Return current locale.
 
-```js
+```ts
 console.log(locale) 
 // Return "en"
 ```
@@ -138,17 +149,27 @@ console.log(locale)
 
 Get languages method return array.
 
-```js
+```ts
+const {
+    getLanguages, // Method to change locale
+} = useIntl()
+
 const languages = getLanguages()
+
 console.log(languages)
+
 // [{
 //     locale: 'en',
 //     selected: true,
-//     label: 'English' // Meta from language pack
+//     meta: {
+//          label: 'English' // Meta from language pack
+//     }
 // }, {
-//     locale: 'ru',
+//     locale: 'ky',
 //     selected: false,
-//     label: 'Русский язык' // Meta from language pack
+//     meta: {
+//          label: 'Кыргызча' // Meta from language pack
+//     }
 // }]
 ```
 
@@ -156,6 +177,10 @@ console.log(languages)
 
 Will change the language. If suddenly the locale was not found, use the fallback locale or the last selected one.
 
-```js
-changeLocale('ru')
+```ts
+const {
+    changeLocale, // Method to change locale
+} = useIntl()
+
+changeLocale('ky')
 ```

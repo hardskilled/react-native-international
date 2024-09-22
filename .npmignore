@@ -1,5 +1,9 @@
 .vscode
+yarn.lock
 package-lock.json
 node_modules
 .idea
 example
+bin
+eslint*
+src

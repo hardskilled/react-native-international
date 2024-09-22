@@ -81,7 +81,9 @@ export const initialization: InitializationFunction = ({
             options.defaultFallback = lang.locale
         }
 
-        buffer.translations[lang.locale] = lang.translations
+        buffer.translations[lang.locale] = {
+            ...lang.translations
+        }
     }
 
     if (defaultFallback && !buffer.translations[defaultFallback]) {

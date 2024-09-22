@@ -66,11 +66,15 @@ export const initialization: InitializationFunction = async ({
     return changeLocale(options.localeFromPhone)
 }
 
-const getLanguages = (locale) =>
-    options.languages.map((language) => ({
+const getLanguages = (locale) => {
+
+    console.warn('dbg:options.languages', options.languages)
+
+    return options.languages.map((language) => ({
         selected: locale === language.locale,
         ...language,
     }))
+}
 
 export const useIntl = (): UseIntlReturn => {
     const locale = UIStore.useState((g) => g.locale || options.defaultFallback)

@@ -1,4 +1,6 @@
-import formatMessage, {SetupOptions} from 'format-message'
+import formatMessageInstance, {SetupOptions} from 'format-message'
+import { UIStore } from './store'
+
 import {
     ChangeLocaleFunction,
     InitializationFunction,
@@ -6,8 +8,8 @@ import {
     LocaleOptions,
     UseIntlReturn
 } from "./types/index.type";
-import { useMemo } from "react";
-import { UIStoreState } from "./types/store.type";
+
+const formatMessage = formatMessageInstance.namespace()
 
 const options: LocaleOptions = {
     languages: [],
@@ -28,17 +30,21 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
         return null
     }
 
+    options.locale = locale
+
     formatMessage.setup({
-        locale: locale,
+        locale: options.locale,
         translations: buffer.translations[options.locale],
     })
-
-    options.locale = locale
 
     console.warn('dbg:vvv', formatMessage.setup({
         locale: options.locale,
         translations: buffer.translations[options.locale],
     }))
+
+    UIStore.update((s) => {
+        s.locale = locale
+    })
 
     return locale
 }
@@ -105,16 +111,11 @@ const getLanguages = (locale) =>
     }))
 
 export const useIntl = (): UseIntlReturn => {
-    const UIStore = useMemo<UIStoreState>(
-        () => ({
-            locale: options.locale || options.defaultFallback
-        }),
-        [options.locale]
-    )
+    const locale = UIStore.useState((g) => g.locale || options.defaultFallback)
 
     return {
-        getLanguages: () => getLanguages(UIStore.locale),
-        locale: UIStore.locale,
+        getLanguages: () => getLanguages(locale),
+        locale,
         t: formatMessage,
         changeLocale,
     }

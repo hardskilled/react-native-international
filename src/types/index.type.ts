@@ -29,6 +29,7 @@ export type InitializationParams = {
     localeFromPhone: () => Locale;
     languages: LanguagePack[];
     defaultFallback?: Locale | null;
+    debug?: boolean;
 };
 
 export type ChangeLocaleFunction = (locale: Locale) => Locale | null;
@@ -40,5 +41,4 @@ export interface UseIntlReturn {
     locale: Locale | null;
     t: TFunction;
     changeLocale: (locale: Locale) => Locale | null;
-    debug?: boolean;
 }

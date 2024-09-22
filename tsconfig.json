@@ -10,7 +10,7 @@
     "target": "es2016",
     "module": "commonjs",
     "rootDir": "./src",
-    "outFile": "./dist/index.js",
+    "outDir": "./dist",
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,

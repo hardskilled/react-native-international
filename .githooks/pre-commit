@@ -1,5 +1,9 @@
 #!/bin/sh
 
+echo "[*] Remove dist"
+
+rm -rf ./dist
+
 echo "[*] Check eslint"
 
 npm run test

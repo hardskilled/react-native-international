@@ -49,7 +49,7 @@ export const initialization: InitializationFunction = async ({
         meta: i.meta
     }))
 
-    options.localeFromPhone = localeFromPhone()
+    options.localeFromPhone = await localeFromPhone()
 
     const i18nextParams: InitOptions = {
         compatibilityJSON: 'v3',

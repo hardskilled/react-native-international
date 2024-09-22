@@ -26,7 +26,7 @@ export type LocaleBuffer = {
 }
 
 export type InitializationParams = {
-    localeFromPhone: () => Locale;
+    localeFromPhone: () => Promise<Locale>;
     languages: LanguagePack[];
     defaultFallback?: Locale | null;
     debug?: boolean;

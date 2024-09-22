@@ -32,8 +32,8 @@ Make separate files for each language.
 
 ##### en.js
 
-```js
-export default {
+```ts
+export default <LanguagePack>{
     locale: 'en',
     meta: { // Shown in method getLanguages
         label: 'English',
@@ -45,18 +45,18 @@ export default {
 }
 ```
 
-##### ru.js
+##### ky.js
 
-```js
-export default {
-    locale: 'ru',
+```ts
+export default <LanguagePack>{
+    locale: 'ky',
     meta: { // Shown in method getLanguages
-        label: 'Русский язык',
+        label: 'Кыргызча',
     },
     translations: {
-        hello: 'Привет!',
-        hello_with_name: 'Привет {name}!',
-    },
+        hello: 'Салам!',
+        hello_with_name: 'Салам {name}!',
+    }
 }
 ```
 
@@ -64,7 +64,7 @@ export default {
 
 Open `index.js` and add languages initialization before app render.
 
-```js
+```ts
 import {AppRegistry} from 'react-native'
 import {name as appName} from './app.json'
 
@@ -74,7 +74,7 @@ import {initialization} from 'react-native-international'
 // Add locales
 initialization([
     require('./en'),
-    require('./ru')
+    require('./ky')
 ])
 
 AppRegistry.registerComponent(appName, () => App)
@@ -82,18 +82,18 @@ AppRegistry.registerComponent(appName, () => App)
 
 If you want to set default fallback language, you can use second argument
 
-```js
+```ts
 initialization([
     require('./en'),
-    require('./ru')
-], 'ru')
+    require('./ky')
+], 'ky')
 ```
 
 ### Step 3. Use a hook
 
 Use a webhook `useIntl` in a component that uses strings.
 
-```jsx
+```tsx
 import React from 'react'
 import {View, Text} from 'react-native'
 import {useIntl} from 'react-native-international'
@@ -116,7 +116,7 @@ export default ({navigation}) => {
 
 There are several helper methods for comfortable working with languages.
 
-```js
+```ts
 const {
     t, // Instance format-message 
     locale, // Current locale
@@ -129,7 +129,7 @@ const {
 
 Return current locale.
 
-```js
+```ts
 console.log(locale) 
 // Return "en"
 ```
@@ -138,7 +138,7 @@ console.log(locale)
 
 Get languages method return array.
 
-```js
+```ts
 const languages = getLanguages()
 console.log(languages)
 // [{
@@ -146,9 +146,9 @@ console.log(languages)
 //     selected: true,
 //     label: 'English' // Meta from language pack
 // }, {
-//     locale: 'ru',
+//     locale: 'ky',
 //     selected: false,
-//     label: 'Русский язык' // Meta from language pack
+//     label: 'Кыргызча' // Meta from language pack
 // }]
 ```
 
@@ -156,6 +156,6 @@ console.log(languages)
 
 Will change the language. If suddenly the locale was not found, use the fallback locale or the last selected one.
 
-```js
-changeLocale('ru')
+```ts
+changeLocale('ky')
 ```

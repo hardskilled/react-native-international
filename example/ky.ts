@@ -1,4 +1,4 @@
-import { LanguagePack } from '../types/index.type'
+import { LanguagePack } from '../src/types/index.type'
 
 export default <LanguagePack>{
     locale: 'ky',

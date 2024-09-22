@@ -29,11 +29,11 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
 
     options.locale = locale
 
-    console.warn('dbg:000', [options.locale, buffer.translations[options.locale]])
-
     formatMessage.setup({
         locale: options.locale,
-        translations: buffer.translations[options.locale],
+        translations: {
+            ...buffer.translations[options.locale]
+        },
     })
 
     console.warn('dbg:vvv', formatMessage.setup({
@@ -97,7 +97,9 @@ export const initialization: InitializationFunction = ({
 
     formatMessage.setup({
         locale: options.defaultFallback,
-        translations: buffer.translations[options.defaultFallback],
+        translations: {
+            ...buffer.translations[options.defaultFallback]
+        },
     })
 
     return changeLocale(options.localeFromPhone)

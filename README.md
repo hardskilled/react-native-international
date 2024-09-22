@@ -30,13 +30,13 @@ yarn add react-native-international
 
 ## Usage
 
-The first step is to add language packs
+The first step is to add language packs.
 
 ### Step 1. Create language packs
 
-Make separate files for each language.
+For first make directory `translations` and separate files for each language. 
 
-##### en.js
+##### translations/en.ts
 
 ```ts
 export default <LanguagePack>{
@@ -51,7 +51,7 @@ export default <LanguagePack>{
 }
 ```
 
-##### ky.js
+##### translations/ky.ts
 
 ```ts
 export default <LanguagePack>{
@@ -68,32 +68,36 @@ export default <LanguagePack>{
 
 ### Step 2. Initialize languages
 
-Open `index.js` and add languages initialization before app render.
+Make initiator, for example, `translations/_i18t.ts`.
 
 ```ts
-import {AppRegistry} from 'react-native'
-import {name as appName} from './app.json'
+import { initialization } from 'react-native-international'
+import { getLocales } from "expo-localization";
 
-// Import initialization
-import {initialization} from 'react-native-international'
+import enLang from './en'
+import kyLang from './ky'
 
-// Add locales
-initialization([
-    require('./en'),
-    require('./ky')
-])
+const localeFromPhone = () => {
+    return getLocales()?.[0]?.languageCode ?? "en";
+}
 
-AppRegistry.registerComponent(appName, () => App)
+void initialization({
+    defaultFallback: 'en',
+    languages: [
+        enLang,
+        kyLang
+    ],
+    localeFromPhone
+})
 ```
 
-If you want to set default fallback language, you can use second argument
+Open `index.js`, `App.tsx`, or `app/_layout.tsx` and add languages initialization import.
 
 ```ts
-initialization([
-    require('./en'),
-    require('./ky')
-], 'ky')
+import "./localization/_i18n"
 ```
+
+If you want to set language immediately, you can use `localeFromPhone` handler
 
 ### Step 3. Use a hook
 
@@ -101,10 +105,10 @@ Use a webhook `useIntl` in a component that uses strings.
 
 ```tsx
 import React from 'react'
-import {View, Text} from 'react-native'
-import {useIntl} from 'react-native-international'
+import { View, Text } from 'react-native'
+import { useIntl } from 'react-native-international'
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
     const {
         t, // Instance i18next 
     } = useIntl()
@@ -120,12 +124,12 @@ export default ({navigation}) => {
 
 ## Change language
 
-There are several helper methods for comfortable working with languages.
+There are several helper methods for working with languages.
 
 ```ts
 const {
     t, // Instance format-message 
-    locale, // Current locale
+    locale, // Current locale string
     getLanguages, // Method to get locales with "meta" property from language pack and "selected" flag.
     changeLocale, // Method to change locale
 } = useIntl()
@@ -145,16 +149,26 @@ console.log(locale)
 Get languages method return array.
 
 ```ts
+const {
+    getLanguages, // Method to change locale
+} = useIntl()
+
 const languages = getLanguages()
+
 console.log(languages)
+
 // [{
 //     locale: 'en',
 //     selected: true,
-//     label: 'English' // Meta from language pack
+//     meta: {
+//          label: 'English' // Meta from language pack
+//     }
 // }, {
 //     locale: 'ky',
 //     selected: false,
-//     label: 'Кыргызча' // Meta from language pack
+//     meta: {
+//          label: 'Кыргызча' // Meta from language pack
+//     }
 // }]
 ```
 
@@ -163,5 +177,9 @@ console.log(languages)
 Will change the language. If suddenly the locale was not found, use the fallback locale or the last selected one.
 
 ```ts
+const {
+    changeLocale, // Method to change locale
+} = useIntl()
+
 changeLocale('ky')
 ```

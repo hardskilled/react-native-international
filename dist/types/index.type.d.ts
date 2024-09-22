@@ -30,7 +30,7 @@ export interface UseIntlReturn {
     getLanguages: () => (LanguagePack & {
         selected: boolean;
     })[];
-    locale: string;
+    locale: Locale | null;
     t: TFunction;
     changeLocale: (locale: Locale) => Locale | null;
 }

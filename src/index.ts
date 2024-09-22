@@ -43,10 +43,11 @@ export const initialization: InitializationFunction = async ({
    languages,
    defaultFallback = null,
    debug = false
-}) => {
+}, lang = null) => {
     options.localeFromPhone = localeFromPhone()
 
     const i18nextParams: InitOptions = {
+        compatibilityJSON: 'v3',
         lng: defaultFallback,
         debug,
         resources: {}
@@ -74,7 +75,7 @@ const getLanguages = (locale) =>
 export const useIntl = (): UseIntlReturn => {
     const locale = UIStore.useState((g) => g.locale || options.defaultFallback)
 
-    return {
+    return <UseIntlReturn>{
         getLanguages: () => getLanguages(locale),
         locale,
         t: i18next.t,

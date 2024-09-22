@@ -1,33 +1,16 @@
-import { Platform, NativeModules } from 'react-native'
-import formatMessage from 'format-message'
+import * as formatMessage from 'format-message'
 import { UIStore } from './store'
+import { ChangeLocaleFunction, InitializationFunction, LocaleOptions, UseIntlReturn } from "./types/index.type";
 
-const getLocateFromPhone = () => {
-    if (Platform.OS === 'ios') {
-        return (
-            NativeModules.SettingsManager.settings.AppleLocale ||
-            NativeModules.SettingsManager.settings.AppleLanguages[0]
-        )
-    }
-
-    return NativeModules.I18nManager.localeIdentifier
-}
-
-const getLocale = () => {
-    const locale = getLocateFromPhone()
-
-    return locale.split('_').shift()
-}
-
-const options = {
+const options: LocaleOptions = {
     languages: [],
-    localeFromPhone: getLocale(),
+    localeFromPhone: null,
     defaultFallback: null,
     locale: null,
     translations: {},
 }
 
-export const changeLocale = (locale) => {
+export const changeLocale: ChangeLocaleFunction = (locale) => {
     if (locale && !options.translations[locale]) {
         return null
     }
@@ -36,7 +19,7 @@ export const changeLocale = (locale) => {
 
     formatMessage.setup({
         locale: options.locale,
-        translations: options.translations,
+        translations: options.translations[options.locale],
     })
 
     UIStore.update((s) => {
@@ -46,14 +29,20 @@ export const changeLocale = (locale) => {
     return locale
 }
 
-export const initialization = (languages, defaultFallback = null) => {
+export const initialization: InitializationFunction = ({
+   localeFromPhone,
+   languages,
+   defaultFallback = null
+}) => {
+    options.localeFromPhone = localeFromPhone()
+
     if (!languages || !Array.isArray(languages) || languages.length === 0) {
         console.warn('No language packs found')
         return
     }
 
     for (const rq of languages) {
-        const lang = rq.default ? rq.default : rq
+        const lang = rq
 
         if (!lang.locale) {
             console.warn('Check language pack for locales')
@@ -67,7 +56,7 @@ export const initialization = (languages, defaultFallback = null) => {
 
         options.languages.push({
             locale: lang.locale,
-            ...lang.meta,
+            meta: lang.meta,
         })
 
         if (!options.defaultFallback) {
@@ -85,13 +74,13 @@ export const initialization = (languages, defaultFallback = null) => {
 
     formatMessage.setup({
         locale: options.defaultFallback,
-        translations: options.translations,
+        translations: options.translations[options.defaultFallback],
     })
 
-    return changeLocale(options.localeFromPhone, false)
+    return changeLocale(options.localeFromPhone)
 }
 
-export const useIntl = () => {
+export const useIntl = (): UseIntlReturn => {
     const locale = UIStore.useState((g) => g.locale || options.defaultFallback)
 
     const getLanguages = () =>

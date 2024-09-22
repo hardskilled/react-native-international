@@ -20,6 +20,10 @@ export type LocaleOptions = {
 };
 
 export type LocaleBuffer = {
+    current: typeof formatMessage | null
+    namespaces: {
+        [key: string]: typeof formatMessage
+    },
     translations: {
         [key: Locale]: Translations
     }

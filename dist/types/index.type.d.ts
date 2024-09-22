@@ -16,6 +16,10 @@ export type LocaleOptions = {
     locale: Locale | null;
 };
 export type LocaleBuffer = {
+    current: typeof formatMessage | null;
+    namespaces: {
+        [key: string]: typeof formatMessage;
+    };
     translations: {
         [key: Locale]: Translations;
     };

@@ -1,4 +1,4 @@
-import formatMessage from 'format-message'
+import formatMessage, {SetupOptions} from 'format-message'
 import { UIStore } from './store'
 import {
     ChangeLocaleFunction,
@@ -16,6 +16,8 @@ const options: LocaleOptions = {
 }
 
 const buffer: LocaleBuffer = {
+    current: null,
+    namespaces: {},
     translations: {},
 }
 
@@ -34,7 +36,10 @@ export const changeLocale: ChangeLocaleFunction = (locale) => {
         translations: buffer.translations[options.locale],
     })
 
-    console.warn('dbg:vvv', formatMessage('dailer'))
+    console.warn('dbg:vvv', formatMessage.setup({
+        locale: options.locale,
+        translations: buffer.translations[options.locale],
+    }))
 
     UIStore.update((s) => {
         s.locale = locale
@@ -85,7 +90,10 @@ export const initialization: InitializationFunction = ({
         options.defaultFallback = defaultFallback
     }
 
-    console.warn('dbg:buffer.translations', options)
+    console.warn('dbg:buffer.translations', {
+        locale: options.defaultFallback,
+        translations: buffer.translations[options.defaultFallback],
+    })
 
     formatMessage.setup({
         locale: options.defaultFallback,

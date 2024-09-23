@@ -1,7 +1,6 @@
 # React Native International
 
-Flexible internalization of your React Native project with "i18next" library. By default, it uses the locale of
-the phone, but it is possible to change the language via the changeLocale method.
+Flexible internalization of your React Native project with "i18next" library.
 The [i18next](https://www.i18next.com/) library is used for the message format.
 
 ## Demo

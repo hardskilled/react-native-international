@@ -1,5 +1,4 @@
-import { ResourceLanguage } from "i18next/typescript/options";
-import { TFunction } from "i18next/typescript/t";
+import { ResourceLanguage, TOptions } from "i18next/typescript/options";
 
 export type Locale = string
 
@@ -35,6 +34,15 @@ export type InitializationParams = {
 export type ChangeLocaleFunction = (locale: Locale) => Locale | null;
 
 export type InitializationFunction = (params: InitializationParams) => Promise<Locale | null>;
+
+export type TFunction = <
+    TResult extends string | object | Array<string | object> | undefined = string,
+    TKeys extends string | TemplateStringsArray = string,
+    TInterpolationMap extends object = ResourceLanguage
+>(
+    key: TKeys | TKeys[],
+    options?: TOptions<TInterpolationMap> | string,
+) => TResult;
 
 export interface UseIntlReturn {
     getLanguages: () => (LanguagePack & { selected: boolean })[];

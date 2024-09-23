@@ -6,7 +6,7 @@ import {
     ChangeLocaleFunction,
     InitializationFunction,
     LocaleBuffer,
-    LocaleOptions,
+    LocaleOptions, TFunction,
     UseIntlReturn
 } from "./types/index.type";
 
@@ -81,10 +81,10 @@ const getLanguages = (locale) => {
 export const useIntl = (): UseIntlReturn => {
     const locale = UIStore.useState((g) => g.locale || options.defaultFallback)
 
-    return <UseIntlReturn>{
+    return {
         getLanguages: () => getLanguages(locale),
         locale,
-        t: i18next.t,
+        t: i18next.t as TFunction,
         changeLocale,
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "react-native-international",
-  "version": "2.0.0-rc2",
+  "version": "2.0.0-rc3",
   "description": "Flexible i18n package for React Native or Expo based on \"i18next\"",
   "module": "dist/index.esm.js",
   "main": "dist/index.js",

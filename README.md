@@ -76,7 +76,8 @@ import { getLocales } from "expo-localization";
 import enLang from './en'
 import kyLang from './ky'
 
-const localeFromPhone = () => {
+const localeFromPhone = async () => {
+    // You can take saved language from storage here
     return getLocales()?.[0]?.languageCode ?? "en";
 }
 

@@ -1,4 +1,5 @@
 import { ResourceLanguage, TOptions } from "i18next/typescript/options";
+import { ReactNode } from "react";
 
 export type Locale = string
 
@@ -42,7 +43,7 @@ export type TFunction = <
 >(
     key: TKeys | TKeys[],
     options?: TOptions<TInterpolationMap> | string,
-) => TResult;
+) => ReactNode;
 
 export interface UseIntlReturn {
     getLanguages: () => (LanguagePack & { selected: boolean })[];
